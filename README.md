@@ -1,159 +1,148 @@
-# Turborepo starter
+# AWS Amplify Gen2 + Next.js Starter (Turborepo)
 
-This Turborepo starter is maintained by the Turborepo core team.
+This repository is a starter template for building AWS Amplify Gen2 applications with Next.js as the frontend.
 
-## Using this example
+It is designed to be used directly for fullstack serverless development, with:
 
-Run the following command:
+- A Next.js web frontend (`apps/webapp`)
+- An Amplify Gen2 backend (`packages/backend/amplify`) for auth and data resources
+- A monorepo setup using npm workspaces + Turbo for scalable project organization
 
-```sh
-npx create-turbo@latest
+## What You Can Build With This Template
+
+Use this template as a foundation to build production-ready fullstack serverless applications, including:
+
+- Authentication flows (email login, user sessions)
+- API/data-driven features backed by Amplify Data
+- Secure frontend + backend integration through generated Amplify outputs
+- Extendable backend resources (Storage, Functions, custom resources via Amplify Gen2)
+
+In short: you can clone this repo and start implementing fullstack features immediately without manually wiring infrastructure from scratch.
+
+## Tech Stack
+
+- AWS Amplify Gen2
+- Next.js (App Router)
+- React
+- TypeScript
+- Redux Toolkit
+- Tailwind CSS + DaisyUI
+- Turborepo + npm workspaces
+
+## Project Structure
+
+```text
+.
+├── amplify.yml
+├── package.json
+├── apps/
+│   └── webapp/
+│       ├── amplify_outputs.json
+│       ├── app/
+│       │   ├── page.tsx
+│       │   ├── admin/page.tsx
+│       │   └── auth/login/page.tsx
+│       ├── components/
+│       ├── context/
+│       ├── redux/
+│       ├── utils/
+│       └── package.json
+└── packages/
+	└── backend/
+		├── amplify_outputs.json
+		├── package.json
+		└── amplify/
+			├── backend.ts
+			├── auth/resource.ts
+			└── data/resource.ts
 ```
 
-## What's inside?
+## Folder Breakdown
 
-This Turborepo includes the following packages/apps:
+### Root
 
-### Apps and Packages
+- `package.json`: Monorepo scripts (`dev`, `build`, `lint`, `check-types`) run via Turbo
+- `amplify.yml`: Amplify Hosting build/deploy configuration for backend and frontend apps
+- `apps/`: Frontend applications
+- `packages/`: Shared packages and backend workspace packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### `apps/webapp`
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Frontend Next.js application.
 
-### Utilities
+- `app/`: App Router routes, layouts, and pages
+- `components/`: Reusable UI components
+- `context/`: React context providers (Amplify/auth/store integration)
+- `redux/`: Redux store, slices, and selectors
+- `utils/`: Utility modules including Amplify server helpers
 
-This Turborepo has some additional tools already setup for you:
+### `packages/backend`
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+Amplify Gen2 backend workspace.
 
-### Build
+- `amplify/backend.ts`: Backend entrypoint where resources are composed (`auth`, `data`, etc.)
+- `amplify/auth/resource.ts`: Authentication resource definition
+- `amplify/data/resource.ts`: Data schema and authorization setup
+- `amplify_outputs.json`: Generated backend outputs used by connected clients
 
-To build all apps and packages, run the following command:
+## Getting Started
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+### Prerequisites
 
-```sh
-cd my-turborepo
-turbo build
+- Node.js 18+
+- npm
+- AWS account + Amplify access
+
+### 1. Install Dependencies
+
+```bash
+npm install
 ```
 
-Without global `turbo`, use your package manager:
+### 2. Run the Frontend (Next.js)
 
-```sh
-cd my-turborepo
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+From repository root:
+
+```bash
+npm run dev -- --filter=@ui/webapp
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Or from `apps/webapp`:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
+```bash
+npm run dev
 ```
 
-Without global `turbo`:
+### 3. Run Amplify Backend Sandbox
 
-```sh
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+From `packages/backend`:
+
+```bash
+npx ampx sandbox --identifier <your-unique-identifier>
 ```
 
-### Develop
+After backend outputs are generated, ensure `apps/webapp/amplify_outputs.json` is up to date.
 
-To develop all apps and packages, run the following command:
+## Build and Lint
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+From repository root:
 
-```sh
-cd my-turborepo
-turbo dev
+```bash
+npm run build
+npm run lint
+npm run check-types
 ```
 
-Without global `turbo`, use your package manager:
+## Extending This Template
 
-```sh
-cd my-turborepo
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+This starter currently includes Auth and Data resources, and can be extended with:
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+- Storage
+- Functions
+- Custom backend resources
+- Additional frontend apps or shared packages in the monorepo
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Refer to Amplify Gen2 docs for resource extension patterns:
 
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+- https://docs.amplify.aws/react/build-a-backend/
+- https://docs.amplify.aws/gen2/
