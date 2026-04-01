@@ -22,7 +22,7 @@ export default async function AdminLayout({
           What do we feel ?
         </ActiveTabLink>
         <ActiveTabLink href="/admin/gallery" className="tab">
-          Gallery
+          Upload Images
         </ActiveTabLink>
       </div>
       {children}

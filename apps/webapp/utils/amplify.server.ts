@@ -11,7 +11,7 @@ import {
   generateServerClientUsingReqRes,
 } from "@aws-amplify/adapter-nextjs/data";
 import { Schema } from "@/data-schema";
-import { getUrl } from "aws-amplify/storage/server";
+import { getUrl, list } from "aws-amplify/storage/server";
 
 export const { runWithAmplifyServerContext } = createServerRunner({
   config,
@@ -89,12 +89,32 @@ export async function getImageFileUrl(fileName: string) {
         const urlDetails = await getUrl(contextSpec, {
           path: fileName,
           options: {
-            bucket: "self-public",
+            bucket: "yushen-public",
             validateObjectExistence: true,
             expiresIn: 3000,
           },
         });
         return urlDetails;
+      },
+    });
+    return fileDetails;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function listImageFileUrls() {
+  try {
+    const fileDetails = await runWithAmplifyServerContext({
+      nextServerContext: { cookies },
+      operation: async (contextSpec) => {
+        const urlDetailsList = await list(contextSpec, {
+          options: {
+            bucket: "yushen-public",
+            listAll: true,
+          },
+        });
+        return urlDetailsList;
       },
     });
     return fileDetails;

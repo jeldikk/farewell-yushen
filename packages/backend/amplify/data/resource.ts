@@ -1,5 +1,6 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 import { questionaireSchema } from "./questionaire.model";
+import { fileUploadSchema } from "./file-uploads.model";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -7,7 +8,7 @@ adding a new "isDone" field as a boolean. The authorization rule below
 specifies that any unauthenticated user can "create", "read", "update", 
 and "delete" any "Todo" records.
 =========================================================================*/
-const schema = a.combine([questionaireSchema]);
+const schema = a.combine([questionaireSchema, fileUploadSchema]);
 
 export type Schema = ClientSchema<typeof schema>;
 

@@ -1,12 +1,10 @@
 "use client";
 import { startTransition, useActionState, useState } from "react";
-import {
-  FormState,
-  createWhatWeFeelRecords,
-} from "@/actions/what-we-feel.actions";
+
 import { Schema } from "@/data-schema";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import AdminImageFileUploader from "./image-file-uploader.component";
+import { createImageRecord, FormState } from "@/actions/file-upload.actions";
 
 const initialState: FormState = {
   success: false,
@@ -17,7 +15,7 @@ const initialState: FormState = {
 export default function AdminFileUploaderForm() {
   const [fileName, setFileName] = useState<string | null>(null);
   const [state, formAction, isPending] = useActionState(
-    createWhatWeFeelRecords,
+    createImageRecord,
     initialState,
   );
 
@@ -30,7 +28,10 @@ export default function AdminFileUploaderForm() {
       return;
     }
     const formData = new FormData(event.currentTarget);
-
+    console.log(
+      "Form data to be submitted:",
+      Object.fromEntries(formData.entries()),
+    );
     startTransition(() => {
       formAction(formData);
     });
@@ -68,6 +69,7 @@ export default function AdminFileUploaderForm() {
           </legend>
           <textarea
             id="file-summary"
+            required
             name="file-summary"
             className="textarea w-[stretch]"
             rows={3}

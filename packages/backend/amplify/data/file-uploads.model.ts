@@ -1,7 +1,7 @@
 import { a } from "@aws-amplify/backend";
 
-export const questionaireSchema = a.schema({
-  Questionaire: a
+export const fileUploadSchema = a.schema({
+  FileUpload: a
     .model({
       userId: a.string().required(),
       author: a.string().required().default(null),
