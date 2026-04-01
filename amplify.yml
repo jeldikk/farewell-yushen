@@ -35,7 +35,7 @@ applications:
             - corepack enable
             - npm rebuild lightningcss
             - npm ci --include=optional --cache .npm --prefer-offline
-            - npx ampx generate outputs --branch $AWS_BRANCH --app-id <your-app-id>
+            - npx ampx generate outputs --branch $AWS_BRANCH --app-id d2yxylg0aevxs8
             - echo "Amplify outputs generated"
             - ls -la
         build:
@@ -46,7 +46,7 @@ applications:
         postBuild:
           commands:
             - echo "Generating Amplify outputs"
-            - npx ampx generate outputs --branch $AWS_BRANCH --app-id <your-app-id>
+            - npx ampx generate outputs --branch $AWS_BRANCH --app-id d2yxylg0aevxs8
       artifacts:
         baseDirectory: .next
         files:
