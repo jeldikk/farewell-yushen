@@ -2,6 +2,7 @@ import { Schema } from "@/data-schema";
 import Image from "next/image";
 import { cookieBasedClient, getImageFileUrl } from "@/utils/amplify.server";
 import { Suspense } from "react";
+import Link from "next/link";
 
 async function CardSkeleton() {
   return (
@@ -22,26 +23,32 @@ async function ImageCard({
   const username = fileRecord.author.split("@")[0];
   const imageUrl = await getImageFileUrl(fileRecord.fileName);
   return (
-    <div className="card bg-base-100 group mb-4 w-full cursor-pointer break-inside-avoid overflow-hidden rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
-      <figure className="relative w-full overflow-hidden">
-        <Image
-          src={imageUrl.url.toString()}
-          alt={fileRecord.fileName}
-          width={300}
-          height={300}
-          className="h-auto w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-110"
-        />
-        <div className="pointer-events-none absolute inset-0 transition duration-300 group-hover:ring-4 group-hover:ring-primary/40" />
-      </figure>
-      <div className="card-body gap-2 p-4">
-        <h2 className="card-title text-base">Image Summary</h2>
-        <p className="text-sm leading-relaxed">{fileRecord.fileSummary}</p>
+    <Link
+      href={`/ai-gallery/${fileRecord.id}`}
+      className="block"
+      scroll={false}
+    >
+      <div className="card bg-base-100 group mb-4 w-full cursor-pointer break-inside-avoid overflow-hidden rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+        <figure className="relative w-full overflow-hidden">
+          <Image
+            src={imageUrl.url.toString()}
+            alt={fileRecord.fileName}
+            width={300}
+            height={300}
+            className="h-auto w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-110"
+          />
+          <div className="pointer-events-none absolute inset-0 transition duration-300 group-hover:ring-4 group-hover:ring-primary/40" />
+        </figure>
+        <div className="card-body gap-2 p-4">
+          <h2 className="card-title text-base">Image Summary</h2>
+          <p className="text-sm leading-relaxed">{fileRecord.fileSummary}</p>
 
-        <div className="card-footer text-xs opacity-70">
-          Uploaded by {username}
+          <div className="card-footer text-xs opacity-70">
+            Uploaded by {username}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
