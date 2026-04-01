@@ -4,6 +4,7 @@ import { selectAuthDetails, selectIsAdmin } from "@/redux/auth/auth.selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { logOutUser } from "@/redux/auth/auth.slice";
 import Link from "next/link";
+import ThemeSwitcher from "../theme-switcher/theme-switcher.component";
 
 export default function Header() {
   const authDetails = useAppSelector(selectAuthDetails);
@@ -49,9 +50,9 @@ export default function Header() {
           <div className="flex-none">
             {/* Here is the Navbar Items */}
             <ul className="menu menu-horizontal">
-              {/* <li>
+              <li>
                 <ThemeSwitcher />
-              </li> */}
+              </li>
               <li className="hidden lg:block">
                 <Link href={"/"}>Home</Link>
               </li>
