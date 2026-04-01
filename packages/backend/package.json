@@ -4,7 +4,7 @@
   "description": "AWS Amplify Backend for AI Trials",
   "main": "index.js",
   "scripts": {
-    "dev": "npx ampx sandbox --identifier <unique-identifier",
+    "dev": "npx ampx sandbox --identifier yfarewell",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "exports": {

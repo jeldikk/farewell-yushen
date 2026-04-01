@@ -38,12 +38,14 @@ export async function getAuthUserDetails() {
           "cognito:groups"
         ]! as string;
         const isAdmin = cognitoGroups && cognitoGroups.includes("ADMIN");
+        console.log({ user, attributes, cognitoGroups });
         return {
           isAdmin: Boolean(isAdmin),
           user,
         };
       },
     });
+    console.dir({ authUser }, { depth: null });
     return {
       isAdmin: authUser.isAdmin,
       authUser: authUser.user,

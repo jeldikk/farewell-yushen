@@ -1,5 +1,5 @@
 {
-  "name": "amplify-gen2-starter",
+  "name": "yushen-farewell",
   "private": true,
   "scripts": {
     "build": "turbo run build",

@@ -1,103 +1,197 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { motion } from "motion/react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  };
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, y: -40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+    hover: {
+      scale: 1.05,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+
+  return (
+    <div
+      className="hero min-h-screen place-items-center bg-gradient-to-b from-base-200 to-base-100"
+      style={{
+        backgroundImage: "url(/images/hero-background.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="hero-overlay bg-black/40"></div>
+
+      <motion.div
+        className="text-center text-neutral-content max-w-2xl px-4"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {/* Main Title */}
+        <motion.div variants={titleVariants}>
+          <h1 className="mb-2 text-6xl md:text-7xl font-bold bg-gradient-to-r from-yellow-200 via-pink-200 to-red-200 bg-clip-text text-transparent drop-shadow-lg">
+            🌟 Happy Farewell Yushen! 🌟
+          </h1>
+        </motion.div>
+
+        {/* Subtitle with Character Traits */}
+        <motion.div variants={itemVariants} className="my-6">
+          <div className="divider divider-warning my-4"></div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            You are a great...
+          </h2>
+          <motion.div
+            className="flex flex-wrap gap-2 justify-center mb-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            {["Colleague", "Friend", "Leader", "Mentor"].map((trait, idx) => (
+              <motion.div
+                key={idx}
+                variants={itemVariants}
+                whileHover={{ scale: 1.1 }}
+              >
+                <span className="badge badge-lg badge-primary gap-2">
+                  {trait === "Colleague" && "👥"}
+                  {trait === "Friend" && "🤝"}
+                  {trait === "Leader" && "🎯"}
+                  {trait === "Mentor" && "📚"}
+                  {trait}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
+          <div className="divider divider-warning my-4"></div>
+        </motion.div>
+
+        {/* Main Message */}
+        <motion.p
+          variants={itemVariants}
+          className="text-lg md:text-xl mb-8 leading-relaxed drop-shadow-md"
+        >
+          We will miss you dearly, Yushen! Your impact on our team and the
+          memories we've shared will always be cherished. Wishing you all the
+          best in your future endeavors! Your dedication, hard work, and
+          positive attitude have made a lasting impression on us all. We will
+          miss your presence during our daily interactions and the joy you
+          brought to our team.
+        </motion.p>
+
+        {/* Stats Section */}
+        <motion.div
+          variants={itemVariants}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+        >
+          {[
+            { icon: "💡", label: "Ideas Shared" },
+            { icon: "👏", label: "Support Given" },
+            { icon: "🎉", label: "Moments Shared" },
+            { icon: "💪", label: "Growth Inspired" },
+          ].map((stat, idx) => (
+            <motion.div
+              key={idx}
+              className="stat bg-base-300 bg-opacity-70 backdrop-blur rounded-lg p-4"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="stat-title text-base-content">{stat.icon}</div>
+              <div className="stat-value text-primary text-sm">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Action Buttons */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          variants={itemVariants}
+        >
+          <motion.div
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap={{ scale: 0.95 }}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            <Link
+              href="/ai-gallery"
+              className="btn btn-primary btn-lg gap-2 shadow-lg"
+            >
+              <span>🖼️</span>
+              View Gallery
+            </Link>
+          </motion.div>
+
+          <motion.div
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link
+              href="/what-we-feel"
+              className="btn btn-secondary btn-lg gap-2 shadow-lg"
+            >
+              <span>💭</span>
+              How do we feel
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        {/* Footer Divider */}
+        <motion.div variants={itemVariants} className="mt-6">
+          <p className="text-sm md:text-base opacity-90">
+            ✨ Wishing you an amazing journey ahead! ✨
+          </p>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

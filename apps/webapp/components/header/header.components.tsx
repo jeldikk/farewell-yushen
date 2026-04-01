@@ -43,21 +43,29 @@ export default function Header() {
           </div>
           <div className="mx-2 flex-1 px-2">
             <Link className="btn btn-ghost text-xl" href="/">
-              Jeldikk
+              Made with ❤️ for Yushen
             </Link>
           </div>
           <div className="flex-none">
             {/* Here is the Navbar Items */}
             <ul className="menu menu-horizontal">
-              <li>{/* <ThemeSwitcher /> */}</li>
+              {/* <li>
+                <ThemeSwitcher />
+              </li> */}
               <li className="hidden lg:block">
                 <Link href={"/"}>Home</Link>
+              </li>
+              <li className="hidden lg:block">
+                <Link href={"/ai-gallery"}>AI Gallery</Link>
+              </li>
+              <li className="hidden lg:block">
+                <Link href={"/what-we-feel"}>How do we feel</Link>
               </li>
               <li className="hidden lg:block">
                 <Link href={"/admin"}>Admin</Link>
               </li>
 
-              {authDetails && isAdmin ? (
+              {authDetails ? (
                 <button
                   className="btn btn-sm btn-link font-bold hidden lg:block"
                   onClick={() => dispatch(logOutUser())}
