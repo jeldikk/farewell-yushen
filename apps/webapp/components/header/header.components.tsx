@@ -68,7 +68,7 @@ export default function Header() {
 
               {authDetails ? (
                 <button
-                  className="btn btn-sm btn-link font-bold hidden lg:block"
+                  className="btn btn-sm btn-primary font-bold hidden lg:block"
                   onClick={() => dispatch(logOutUser())}
                 >
                   Logout
@@ -89,12 +89,18 @@ export default function Header() {
             <Link href={"/"}>Home</Link>
           </li>
           <li>
+            <Link href={"/ai-gallery"}>AI Gallery</Link>
+          </li>
+          <li>
+            <Link href={"/what-we-feel"}>How do we feel</Link>
+          </li>
+          <li>
             <Link href={"/admin"}>Admin</Link>
           </li>
 
-          {authDetails && isAdmin ? (
+          {authDetails ? (
             <button
-              className="btn btn-sm btn-link font-bold"
+              className="btn btn-sm btn-primary font-bold"
               onClick={() => dispatch(logOutUser())}
             >
               Logout
