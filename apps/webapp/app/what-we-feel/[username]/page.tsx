@@ -33,7 +33,7 @@ export default async function IndividualWhatWeFeelPage(props: Props) {
 
   if (answerRecords.data.length === 0) {
     return (
-      <div className="flex h-screen w-full items-center justify-center">
+      <div className="flex w-full items-center justify-center">
         <h2 className="text-4xl font-bold p-4">
           {username} has not submitted their answers yet.
         </h2>

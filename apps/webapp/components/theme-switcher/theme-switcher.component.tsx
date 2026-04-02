@@ -19,7 +19,6 @@ export default function ThemeSwitcher() {
       <option value="dark">Dark</option>
       <option value="cupcake">Cupcake</option>
       <option value="retro">Retro</option>
-      <option value="cyberpunk">Cyberpunk</option>
       <option value="coffee">Coffee</option>
       <option value="caramellatte">Caramel Latte</option>
     </select>

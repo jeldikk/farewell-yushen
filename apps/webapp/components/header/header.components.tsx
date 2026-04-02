@@ -5,11 +5,16 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { logOutUser } from "@/redux/auth/auth.slice";
 import Link from "next/link";
 import ThemeSwitcher from "../theme-switcher/theme-switcher.component";
+import { isAuthenticated } from "@/utils/amplify.server";
 
 export default function Header() {
   const authDetails = useAppSelector(selectAuthDetails);
   const isAdmin = useAppSelector(selectIsAdmin);
   const dispatch = useAppDispatch();
+
+  const isYushen =
+    authDetails?.signInDetails?.loginId?.split("@")[0].toLowerCase() ===
+    "yushen";
 
   return (
     <header className="drawer">
@@ -62,6 +67,11 @@ export default function Header() {
               <li className="hidden lg:block">
                 <Link href={"/what-we-feel"}>How do we feel</Link>
               </li>
+              {authDetails && (
+                <li className="hidden lg:block">
+                  <Link href={"/yushen-feedback"}>Yushen's Feedback</Link>
+                </li>
+              )}
               <li className="hidden lg:block">
                 <Link href={"/admin"}>Admin</Link>
               </li>
@@ -94,6 +104,11 @@ export default function Header() {
           <li>
             <Link href={"/what-we-feel"}>How do we feel</Link>
           </li>
+          {authDetails && (
+            <li>
+              <Link href={"/yushen-feedback"}>Yushen's Feedback</Link>
+            </li>
+          )}
           <li>
             <Link href={"/admin"}>Admin</Link>
           </li>
