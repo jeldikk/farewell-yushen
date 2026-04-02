@@ -9,6 +9,7 @@ export const fileUploadSchema = a.schema({
       fileSummary: a.string().required(),
     })
     .authorization((allow) => [
+      allow.guest().to(["get", "list"]),
       allow.authenticated().to(["update", "create", "list", "get"]),
     ]),
 });

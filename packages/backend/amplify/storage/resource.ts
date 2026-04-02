@@ -4,7 +4,7 @@ export const publicBucket = defineStorage({
   name: "yushen-public",
   access: (allow) => ({
     "public/images/*": [
-      allow.guest.to(["get", "list"]),
+      allow.guest.to(["read"]),
       allow.authenticated.to(["delete", "write", "read"]),
     ],
   }),

@@ -1,6 +1,10 @@
 import { Schema } from "@/data-schema";
 import Image from "next/image";
-import { cookieBasedClient, getImageFileUrl } from "@/utils/amplify.server";
+import {
+  cookieBasedClient,
+  getImageFileUrl,
+  isAuthenticated,
+} from "@/utils/amplify.server";
 import { Suspense } from "react";
 import Link from "next/link";
 
@@ -53,7 +57,17 @@ async function ImageCard({
 }
 
 export default async function AiGalleryPage() {
-  const fileRecords = await cookieBasedClient.models.FileUpload.list();
+  const authenticated = await isAuthenticated();
+  const fileRecords = await cookieBasedClient.models.FileUpload.list({
+    filter: {
+      author: {
+        // ends with "@domain.com" to include both authenticated and guest uploads
+        contains: "@offshore.com",
+      },
+    },
+    authMode: authenticated ? "userPool" : "iam",
+  });
+  console.dir({ fileRecordsData: fileRecords.data }, { depth: null });
   return (
     <div className="w-full px-6 py-10">
       <h1 className="mb-8 text-center text-3xl font-bold">AI Gallery Page</h1>
