@@ -2,9 +2,9 @@
 @plugin "daisyui" {
   themes:
     light,
-    cupcake --default,
+    cupcake,
     dark --prefersdark,
     coffee,
     caramellatte,
-    retro;
+    retro --default;
 }

@@ -36,7 +36,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider defaultTheme="retro" enableSystem={false}>
           <AmplifyProvider>
             <StoreProvider authDetails={authDetails}>
               <AuthDetailsContextProvider authDetails={authDetails}>
