@@ -21,6 +21,19 @@ export default function AdminImageFileUploader(props: Props) {
         console.log({ error, file });
       }}
       onUploadSuccess={uploadSuccessHandler}
+      processFile={({ file, key }) => {
+        // add a timestamp before the file extension to ensure uniqueness
+        const fileExtension = file.name.split(".").pop();
+        const fileNameWithoutExtension = file.name.replace(
+          `.${fileExtension}`,
+          "",
+        );
+        const newFilename = `${fileNameWithoutExtension}-${Date.now()}.${fileExtension}`;
+        return {
+          file,
+          key: newFilename,
+        };
+      }}
       autoUpload={true}
       showThumbnails={true}
     />
