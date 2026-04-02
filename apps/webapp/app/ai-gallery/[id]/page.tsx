@@ -1,7 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cookieBasedClient, getImageFileUrl } from "@/utils/amplify.server";
+import {
+  cookieBasedClient,
+  getImageFileUrl,
+  isAuthenticated,
+} from "@/utils/amplify.server";
 
 export default async function AiGalleryImagePage({
   params,
@@ -9,10 +13,12 @@ export default async function AiGalleryImagePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const authenticated = await isAuthenticated();
   const recordResponse = await cookieBasedClient.models.FileUpload.list({
     filter: {
       id: { eq: id },
     },
+    authMode: authenticated ? "userPool" : "iam",
   });
 
   const fileRecord = recordResponse.data[0];
@@ -44,7 +50,9 @@ export default async function AiGalleryImagePage({
         <aside className="border-base-300 flex flex-col gap-4 border-t p-5 md:col-span-1 md:border-t-0 md:border-l">
           <div>
             <h1 className="text-lg font-bold">Image Summary</h1>
-            <p className="mt-2 text-sm leading-relaxed">{fileRecord.fileSummary}</p>
+            <p className="mt-2 text-sm leading-relaxed">
+              {fileRecord.fileSummary}
+            </p>
           </div>
           <div className="text-sm opacity-80">Uploaded by {username}</div>
         </aside>
